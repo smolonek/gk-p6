@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Canvas x:Name="Canvas"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Canvas MouseRightButtonDown="Canvas_MouseLeftButtonDown" Background="White" Grid.Column="0" x:Name="Canvas"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Name="DrawBezier" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Click="DrawBezier_Click">Rysuj</Button>
+            <Button Name="ClearCanvas" Grid.Row="1" VerticalAlignment="Top" Click="ClearCanvas_Click">Wyczyść</Button>
+            <Button Name="ClearControlPointsBtn"  Grid.Row="2" VerticalAlignment="Top" Click="ClearControlPoints_Click" >Usuń kontrolne pubnktyu</Button>
+            <Label Grid.Row="3" Name="CordsLabel"></Label>
+        </Grid>
     </Grid>
 </Window>
