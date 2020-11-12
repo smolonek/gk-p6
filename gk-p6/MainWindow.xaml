@@ -14,15 +14,48 @@
         <Canvas MouseRightButtonDown="Canvas_MouseLeftButtonDown" Background="White" Grid.Column="0" x:Name="Canvas"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>                
+                <RowDefinition Height="Auto"></RowDefinition>                
             </Grid.RowDefinitions>
-            <Button Name="DrawBezier" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Click="DrawBezier_Click">Rysuj</Button>
-            <Button Name="ClearCanvas" Grid.Row="1" VerticalAlignment="Top" Click="ClearCanvas_Click">Wyczyść</Button>
-            <Button Name="ClearControlPointsBtn"  Grid.Row="2" VerticalAlignment="Top" Click="ClearControlPoints_Click" >Usuń kontrolne pubnktyu</Button>
-            <Label Grid.Row="3" Name="CordsLabel"></Label>
+            <Button Margin="3" Name="DrawBezier" Click="DrawBezier_Click">Rysuj</Button>
+            <Button  Margin="3" Name="ClearCanvas" Grid.Row="1" VerticalAlignment="Top" Click="ClearCanvas_Click">Wyczyść</Button>
+            <Button Margin="3" Name="ClearControlPointsBtn"  Grid.Row="2" Visibility="Hidden" VerticalAlignment="Top" Click="ClearControlPoints_Click" >Usuń kontrolne pubnktyu</Button>
+            <Grid Grid.Row="2" Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Content="X: "></Label>
+                <TextBox Grid.Column="1" Name="X"></TextBox>
+                <Label Grid.Column="2" Content="Y: "></Label>
+                <TextBox Grid.Column="3" Grid.Row="2" Name="Y"></TextBox>
+            </Grid>
+            <Button Margin="3" Name="AddNewPoint" Grid.Row="3" VerticalAlignment="Top" Click="AddNewPoint_Click">Dodaj punkt kontrolny</Button>
+            <Grid Grid.Row="4" Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Content="X: "></Label>
+                <TextBox Grid.Column="1" Name="EditX"></TextBox>
+                <Label Grid.Column="2" Content="Y: "></Label>
+                <TextBox Grid.Column="3" Grid.Row="2" Name="EditY"></TextBox>
+                <Label Grid.Column="4" Content="Index: "></Label>
+                <TextBox Grid.Column="5" Name="Index"></TextBox>
+            </Grid>
+            <Button Margin="3" Name="EditPoint" Grid.Row="5" VerticalAlignment="Top" Click="EditPoint_Click" >Edytuj punkt kontrolny</Button>
+            <Label Grid.Row="6" Name="CordsLabel"></Label>
         </Grid>
     </Grid>
 </Window>

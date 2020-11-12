@@ -57,18 +57,18 @@ namespace gk_p6
             //    Canvas.Children.Add(ellipse);
             //}
             //ClearControlPoints();
-            foreach (var point in points)
-            {
-                Ellipse ellipse = new Ellipse();
-                ellipse.Fill = System.Windows.Media.Brushes.LightGray;
-                ellipse.StrokeThickness = 2;
-                ellipse.Stroke = System.Windows.Media.Brushes.Gray;
-                ellipse.Width = 16;
-                ellipse.Height = 16;
-                Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-                Canvas.SetTop(ellipse, point.Y - ellipse.Width / 2);
-                Canvas.Children.Add(ellipse);
-            }
+            //foreach (var point in points)
+            //{
+            //    Ellipse ellipse = new Ellipse();
+            //    ellipse.Fill = System.Windows.Media.Brushes.LightGray;
+            //    ellipse.StrokeThickness = 2;
+            //    ellipse.Stroke = System.Windows.Media.Brushes.Gray;
+            //    ellipse.Width = 16;
+            //    ellipse.Height = 16;
+            //    Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
+            //    Canvas.SetTop(ellipse, point.Y - ellipse.Width / 2);
+            //    Canvas.Children.Add(ellipse);
+            //}
         }
         private Path MakeBezierPath(Point[] points)
         {
@@ -214,8 +214,7 @@ namespace gk_p6
             var ellipse = (Ellipse)sender;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                CordsLabel.Content = string.Format("X: {0}, Y: {1}", e.GetPosition(this).X, e.GetPosition(this).Y);
-                //MessageBox.Show("PO");
+                //CordsLabel.Content = string.Format("X: {0}, Y: {1}", e.GetPosition(this).X, e.GetPosition(this).Y);
                 int index = 0;
                 index = ellipses.IndexOf(ellipse);
                 Canvas.SetLeft(ellipse, e.GetPosition(this).X - ellipse.ActualWidth / 2);
@@ -223,10 +222,9 @@ namespace gk_p6
                 Point point = new Point();
                 point.X = e.GetPosition(this).X;
                 point.Y = e.GetPosition(this).Y;
+                controlPoints[index] = new Point();
                 controlPoints[index] = point;
                 DeletePath();
-                //ClearControlPoints();
-                //Canvas.Children.Clear();
                 DrawPoints(controlPoints);
             }
         }
@@ -234,7 +232,7 @@ namespace gk_p6
         {
             for (int i = Canvas.Children.Count - 1; i >= 0; i--)
             {
-                if(Canvas.Children[i].GetType() == typeof(Path))
+                if (Canvas.Children[i].GetType() == typeof(Path))
                     Canvas.Children.Remove(Canvas.Children[i]);
             }
         }
@@ -247,7 +245,7 @@ namespace gk_p6
                 if (Canvas.Children[i].GetType() == typeof(Ellipse))
                     tmp.Add((Ellipse)Canvas.Children[i]);
             }
-            foreach(var item in tmp)
+            foreach (var item in tmp)
             {
                 Canvas.Children.Remove(item);
             }
@@ -255,6 +253,55 @@ namespace gk_p6
         private void ClearControlPoints_Click(object sender, RoutedEventArgs e)
         {
             ClearControlPoints();
+        }
+
+        private void AddNewPoint_Click(object sender, RoutedEventArgs e)
+        {
+            Point p = new Point(Convert.ToDouble(X.Text), Convert.ToDouble(Y.Text));
+            controlPoints.Add(p);
+            Ellipse point = new Ellipse();
+            point.Fill = System.Windows.Media.Brushes.LightGray;
+            point.StrokeThickness = 2;
+            point.Stroke = System.Windows.Media.Brushes.Gray;
+            point.Width = 16;
+            point.Height = 16;
+            point.MouseMove += ControlPoint_MouseMove;
+            double x = p.X, y = p.Y;
+            Canvas.SetLeft(point, x - point.Width / 2);
+            Canvas.SetTop(point, y - point.Width / 2);
+            Canvas.Children.Add(point);
+            ellipses.Add(point);
+        }
+
+        private void EditPoint_Click(object sender, RoutedEventArgs e)
+        {
+            controlPoints[Convert.ToInt32(Index.Text)] = new Point(Convert.ToDouble(EditX.Text), Convert.ToDouble(EditY.Text));
+            Ellipse el = ellipses.ElementAt(Convert.ToInt32(Index.Text));
+            List<Ellipse> ell = new List<Ellipse>();
+            foreach(var item in Canvas.Children)
+            {
+                if(item.GetType() == typeof(Ellipse) && item == el)
+                {
+                    Ellipse tmp = (Ellipse)item;
+                    Canvas.SetLeft(tmp, controlPoints[Convert.ToInt32(Index.Text)].X - tmp.Width / 2);
+                    Canvas.SetTop(tmp, controlPoints[Convert.ToInt32(Index.Text)].Y - tmp.Width / 2);
+                }
+
+            }
+            DeletePath();
+            DrawPoints(controlPoints);
+            //CordsLabel.Content = string.Format("X: {0}, Y: {1}", e.GetPosition(this).X, e.GetPosition(this).Y);
+            //int index = 0;
+            //index = ellipses.IndexOf(ellipse);
+            //Canvas.SetLeft(ellipse, e.GetPosition(this).X - ellipse.ActualWidth / 2);
+            //Canvas.SetTop(ellipse, e.GetPosition(this).Y - ellipse.ActualHeight / 2);
+            //Point point = new Point();
+            //point.X = e.GetPosition(this).X;
+            //point.Y = e.GetPosition(this).Y;
+            //controlPoints[index] = new Point();
+            //controlPoints[index] = point;
+            //DeletePath();
+            //DrawPoints(controlPoints);
         }
     }
 }
